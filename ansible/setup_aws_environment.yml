@@ -2,6 +2,12 @@
 # We are looking up the ec2 facts and storing them in a host variable
 # so a later play can retrieve the data.
 #
+
+- hosts: tag_Name_{{ instance_lookup_value }}
+  gather_facts: False
+  roles:
+    - { role: awsservicebroker_prep, when: deploy_awsservicebroker == True}
+
 - hosts: localhost
   gather_facts: True
   tasks:
@@ -19,7 +25,6 @@
         proxy_public_ip: "{{ proxy_ec2_facts.instances[0].public_ip_address }}"
         proxy_private_ip: "{{ proxy_ec2_facts.instances[0].private_ip_address }}"
       when: ec2_use_proxy
-
 
 - hosts: tag_Name_{{ proxy_instance_lookup_value }}
   gather_facts: True
@@ -50,7 +55,6 @@
       prompt: "Enter the dockerhub organization you'd like to pull images from: "
       private: no
   roles:
-    - { role: awsservicebroker_prep, when: deploy_awsservicebroker == True}
     - aws_ebs_volumes
     - { role: openshift_proxy_setup, when: ec2_use_proxy == True }
     - aws_repo_setup
