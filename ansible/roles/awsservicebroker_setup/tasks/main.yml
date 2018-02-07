@@ -213,7 +213,7 @@
 
   - name: Waiting up to 5 minutes for ASB pod
     action:
-      shell "{{ oc_cmd }}" get pods | grep -iEm1 "asb.*?running" | grep -v deploy
+      shell "{{ oc_cmd }}" get pods | grep -iEm1 "asb.*?running" | grep -v deploy | grep -v etcd
     register: wait_for_asb_pod
     until: wait_for_asb_pod.rc == 0
     retries: 60

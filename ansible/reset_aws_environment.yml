@@ -21,8 +21,6 @@
         proxy_private_ip: "{{ proxy_ec2_facts.instances[0].private_ip_address }}"
       when: ec2_use_proxy
 
-
-
 - hosts: localhost
   gather_facts: True
   tasks:

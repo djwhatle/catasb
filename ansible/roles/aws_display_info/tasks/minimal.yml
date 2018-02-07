@@ -11,6 +11,18 @@
 
     - set_fact:
         msg: |
+            The cluster has been configured to connect through a squid proxy for outgoing connections.
+
+            Proxy Instance Public IP:  {{ proxy_ec2_facts.instances[0].public_ip_address }}
+            Proxy Instance ID:         {{ proxy_ec2_facts.instances[0].id }}
+            On VPC Proxy URL:          http://{{ proxy_ec2_facts.instances[0].private_ip_address }}:3128
+      when: ec2_use_proxy and my_ec2_facts.instances
+    - debug:
+        msg: "{{ msg.split('\n') }}"
+      when: ec2_use_proxy and my_ec2_facts.instances
+
+    - set_fact:
+        msg: |
             Hostname:                  {{ hostname }}
             OpenShift URL:             {{ cluster_url }}
             SSH Key Name:              {{ ssh_key_name }}

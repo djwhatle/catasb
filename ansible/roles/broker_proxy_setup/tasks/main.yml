@@ -15,7 +15,7 @@
     shell: "{{ oc_cmd }} patch dc {{ proxied_broker_container}} -p '{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"{{ proxied_broker_container}}\",\"envFrom\":[{\"configMapRef\":{\"name\":\"broker-proxy-config\"}}]}]}}}}' -n {{ proxied_broker_project }}"
 
   - name: Waiting up a minute for the broker pod to terminate ...
-    shell: "{{ oc_cmd }} get pods -n {{ proxied_broker_project }} | grep  {{ rc_latest_name.stdout }} | grep -v deploy | grep -iEm1 'asb.*?running'"
+    shell: "{{ oc_cmd }} get pods -n {{ proxied_broker_project }} | grep  {{ rc_latest_name.stdout }} | grep -v deploy | grep -v etcd | grep -iEm1 'asb.*?running'"
     register: wait_for_asb_pod
     until: wait_for_asb_pod.rc == 1
     retries: 20
