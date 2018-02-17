@@ -1,5 +1,4 @@
 ---
-
   - name: Create ext4 filesystems for /var/lib/docker, /tmp, persistent volumes
     async: 200
     register: filesystem_creations
@@ -52,3 +51,4 @@
       src:  "{{ persistent_vol_block_device }}"
       fstype: ext4
       state: mounted
+    when: minimal
