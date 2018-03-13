@@ -31,7 +31,7 @@
 
 - name: Configure Environment for the Multi-Node EC2 Instances
   hosts: launched_ec2
-  remote_user: "{{ 'centos' if deploy_origin else 'ec2-user' }}"
+  remote_user: "{{ 'centos' if use_centos else 'ec2-user' }}"
   become: True
   gather_facts: True
   pre_tasks:
