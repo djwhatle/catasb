@@ -234,7 +234,7 @@ ose_cluster_id: "{{aws_custom_prefix}}"
 kubernetes_cluster_tag_value: "{{ aws_custom_prefix }}"
 openshift_ansible_inventory_path: "{{ playbook_dir }}/my_aos_inventory_file_{{ aws_custom_prefix }}"
 openshift_ansible_repo_url: "https://github.com/openshift/openshift-ansible.git"
-openshift_ansible_repo_branch: "master"
+openshift_ansible_repo_branch: 'release-3.9'
 aos_ops_repo_url: https://mirror.openshift.com/enterprise/enterprise-3.7/latest/RH7-RHAOS-3.7/x86_64/os
 openshift_ver: "v3.7"
 master_api_port: 8443
