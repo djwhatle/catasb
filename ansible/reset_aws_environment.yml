@@ -39,7 +39,6 @@
 
 - hosts: tag_Name_{{ instance_lookup_value }}
   gather_facts: True
-  become: True
   pre_tasks:
     - name: Setting fact of security group id
       set_fact:
