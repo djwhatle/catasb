@@ -38,7 +38,7 @@
     when: ansible_os_family == "RedHat"
 
 
-  - name: Enable bash completion for kubectl on Linux
+  - name: Enable completion for kubectl on Linux
     lineinfile:
       path: "{{ ansible_env.HOME }}/.bashrc"
       line: source <(kubectl completion bash)

@@ -198,7 +198,6 @@
     register: my_sec_group
 
   - name: Ensure the OpenShift security group '{{ aws_openshift_sec_group_name }}' is tagged
-    when: cluster == 'openshift'
     ec2_tag:
       region:   "{{ aws_region }}"
       resource: "{{ my_sec_group.group_id }}"

@@ -3,7 +3,7 @@
       host_fqdn: "{{ aws_custom_prefix }}.{{ target_dns_zone }}"
       wildcard_entry: "*.{{ aws_custom_prefix }}.{{ target_dns_zone }}"
 
-  - name:  Create EC2 instance for OpenShift
+  - name:  Create EC2 instance for OpenShift with unrestricted network egress
     ec2:
       key_name: "{{ ssh_key_name }}"
       instance_type: "{{ instance_type }}"
@@ -27,7 +27,7 @@
       my_ec2_instances: "{{ instance_result }}"
     when: not ec2_use_proxy and cluster == 'openshift'
 
-  - name:  Create EC2 instance for OpenShift using squid proxy
+  - name:  Create EC2 instance for OpenShift with network egress restricted to VPC
     ec2:
       key_name: "{{ ssh_key_name }}"
       instance_type: "{{ instance_type }}"
@@ -43,14 +43,14 @@
       vpc_subnet_id: "{{ public_subnet_a_id }}"
       assign_public_ip: yes
       region: "{{ aws_region }}"
-    register: proxied_instance_result
+    register: instance_result
     when: ec2_use_proxy and cluster == 'openshift'
 
   - set_fact:
-      my_ec2_instances: "{{ proxied_instance_result }}"
+      my_ec2_instances: "{{ instance_result }}"
     when: ec2_use_proxy and cluster == 'openshift'
 
-  - name:  Create EC2 instance for Kubernetes
+  - name:  Create EC2 instance for Kubernetes with unrestricted network egress
     ec2:
       key_name: "{{ ssh_key_name }}"
       instance_type: "{{ instance_type }}"
@@ -68,11 +68,34 @@
       assign_public_ip: yes
       region: "{{ aws_region }}"
     register: instance_result
-    when: cluster == 'kubernetes'
+    when: not ec2_use_proxy and cluster == 'kubernetes'
 
   - set_fact:
       my_ec2_instances: "{{ instance_result }}"
-    when: cluster == 'kubernetes'
+    when: not ec2_use_proxy and cluster == 'kubernetes'
+
+  - name:  Create EC2 instance for Kubernetes with network egress restricted to VPC
+    ec2:
+      key_name: "{{ ssh_key_name }}"
+      instance_type: "{{ instance_type }}"
+      instance_tags:
+        Name: "{{ instance_name }}"
+      image: "{{ aws_ami_id }}"
+      wait: yes
+      exact_count: 1
+      count_tag:
+        Name: "{{ instance_name }}"
+      group_id:
+        - "{{ my_k8s_sec_group.group_id }}"
+      vpc_subnet_id: "{{ public_subnet_a_id }}"
+      assign_public_ip: yes
+      region: "{{ aws_region }}"
+    register: instance_result
+    when: ec2_use_proxy and cluster == 'kubernetes'
+
+  - set_fact:
+      my_ec2_instances: "{{ instance_result }}"
+    when: ec2_use_proxy and cluster == 'kubernetes'
 
   - name: Create EBS volumes for /tmp, docker_vg, /var/lib/docker, persistent volumes
     async: 200
