@@ -11,10 +11,6 @@
   - name: Clone Service Catalog Repo
     shell: "git clone {{ catalog_git }} {{ service_catalog_path }}"
 
-  - name: Building Latest Canary Images
-    shell: "pushd {{ service_catalog_path}} && make images && popd"
-    become: true
-
   - name: Create service-catalog start command
     set_fact:
       kubernetes_start: >-
@@ -32,12 +28,12 @@
   - name: Starting Service Catalog
     shell: "{{ kubernetes_start }}"
 
-  - name: Waiting 1 minutes for service-catalog
+  - name: Waiting 5 minutes for service-catalog
     action: >-
       shell kubectl get deployments -n catalog
-      $(oc get deploy -n catalog | grep apiserver | awk '{ print $1 }')
+      $(kubectl get deploy -n catalog | grep apiserver | awk '{ print $1 }')
       -o go-template={% raw %}'{{ .status.availableReplicas }}'{% endraw %}
     register: apiserver_deployment
     until: apiserver_deployment.stdout == '1'
-    retries: 6
+    retries: 30
     delay: 10

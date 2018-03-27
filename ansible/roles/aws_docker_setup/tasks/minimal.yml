@@ -38,14 +38,14 @@
         group: root
         mode: 0644
       register: docker_storage_template_result
+      when: cluster == 'openshift'
 
     - name: Running docker-storage-setup
       shell: docker-storage-setup
-      when: docker_storage_template_result.changed
+      when: cluster == 'openshift' and docker_storage_template_result.changed
 
     - name: Restart docker service and ensure it is enabled
       service:
         name: docker
         enabled: yes
         state: restarted
-      when: sysconfig_docker.changed
