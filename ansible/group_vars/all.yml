@@ -20,31 +20,31 @@ aws_role_arn_name: "aws-broker-cloudformation"
 # us-east-1
 ##
 aws_region: us-east-1
-aws_ami_id: ami-b63769a1
+aws_ami_id: ami-26ebbc5c
 
 ##
 # us-east-2
 ##
 #aws_region: us-east-2
-#aws_ami_id: ami-0932686c
+#aws_ami_id: ami-0b1e356e
 
 ##
 # us-west-1
 ##
 #aws_region: us-west-1
-#aws_ami_id:  ami-2cade64c
+#aws_ami_id:  ami-77a2a317
 
 ##
 # us-west-2
 ##
 #aws_region: us-west-2
-#aws_ami_id: ami-6f68cf0f
+#aws_ami_id: ami-223f945a
 
 ##
 # Canada
 ##
 #aws_region: ca-central-1
-#aws_ami_id: ami-9062d0f4
+#aws_ami_id: ami-c1cb4ea5
 
 instance_type: c4.4xlarge
 proxy_instance_type: m4.large
