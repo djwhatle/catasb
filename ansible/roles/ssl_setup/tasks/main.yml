@@ -20,6 +20,7 @@
         repo: https://github.com/letsencrypt/letsencrypt.git
         dest: "{{ go_path }}/src/github.com/letsencrypt/letsencrypt"
         version: v0.13.0
+        force: yes
       register: git_clone_le
       when: certsLocal.stat.exists == False and certsRemote.stat.isdir is not defined
 
