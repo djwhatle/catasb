@@ -74,7 +74,7 @@ dockerhub_org: ansibleplaybookbundle
 # aws_ami_id: ami-c1cb4ea5
 
 
-# Enable ec2_use_proxy to tunnel outgoing OpenShift traffic through a squid proxy
+# Enable 'ec2_use_proxy' to send cluster egress through a squid proxy. Only affects EC2 deployments.
 # ec2_use_proxy: True
 # ec2_proxy_instance_type: m4.large
 

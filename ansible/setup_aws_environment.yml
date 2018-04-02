@@ -55,7 +55,7 @@
       private: no
   roles:
     - aws_ebs_volumes
-    - { role: openshift_proxy_setup, when: ec2_use_proxy == True }
+    - { role: aws_proxy_setup, when: ec2_use_proxy == True }
     - aws_repo_setup
     - aws_packages
     - aws_docker_setup
