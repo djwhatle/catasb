@@ -178,6 +178,7 @@
     with_items:
       - "{{ docker_images_group1 }}"
       - "{{ docker_images_group2 }}"
+    become: true
 
   - name: Pull additional docker images for 3.9+
     docker_image:
@@ -190,6 +191,7 @@
     when: (origin_image_tag == "latest") or
           ("v3.9" in origin_image_tag) or
           ("v3.10" in origin_image_tag)
+    become: true
 
   - stat:
       path: "{{ oc_host_config_dir }}/master/master-config.yaml"
