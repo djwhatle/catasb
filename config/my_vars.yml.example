@@ -48,7 +48,7 @@ dockerhub_org: ansibleplaybookbundle
 #
 # deploy_olm: false
 # deploy_admin_console: false
-# olm_version: "0.7.0"
+# olm_version: "0.7.1"
 # admin_console_image: "quay.io/openshift/origin-console:latest"
 
 # Default to the "anyuid" scc for pod deployments.
@@ -79,7 +79,7 @@ dockerhub_org: ansibleplaybookbundle
 # aws_ami_id: ami-6871a115
 # us-east-2
 # aws_region: us-east-2
-# aws_ami_id: ami-03291866 
+# aws_ami_id: ami-03291866
 # us-west-1
 # aws_region: us-west-1
 # aws_ami_id: ami-18726478
