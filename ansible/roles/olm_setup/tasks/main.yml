@@ -43,15 +43,6 @@
       src: "{{ olm_repo_dest }}/deploy/okd/manifests/{{ olm_version }}/"
       dest: "{{ _olm_manifests }}"
 
-  - when: olm_namespace == ""
-    block:
-    - name: Get OLM namespace
-      shell: "perl -ne '/name: (.*)$/ && print $1' {{ olm_repo_dest }}/deploy/okd/manifests/{{ olm_version }}/0000_30_00-namespace.yaml"
-      register: namespace_cmd
-    - name: Set OLM namespace
-      set_fact:
-        olm_namespace: "{{ namespace_cmd.stdout }}"
-
   - name: "Override OLM images"
     when: olm_image_tag_override != ""
     replace:
@@ -75,7 +66,7 @@
           dest: "{{ _osb_cat_manifests }}/{{ item }}"
         with_items:
           - osb-operators.catalogsource.yaml
-          - "osb-operators.configmap.{{ olm_asb_branding }}.yaml"
+          - osb-operators.configmap.upstream.yaml
       - name: Install OSB catalog
         shell: "{{ oc_cmd }} create -f {{ _osb_cat_manifests }}"
 
