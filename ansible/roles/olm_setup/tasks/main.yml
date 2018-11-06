@@ -57,18 +57,12 @@
   - name: Deploy Operator Lifecycle Manager (OLM)
     shell: "{{ oc_cmd }} create -f {{ _olm_manifests }}"
 
-  - name: Enable OSB catalog
+  - name: Install OSB catalog
     when: olm_enable_osb_catalog
-    block:
-      - name: Render OSB catalog templates
-        template:
-          src: "{{ item }}"
-          dest: "{{ _osb_cat_manifests }}/{{ item }}"
-        with_items:
-          - osb-operators.catalogsource.yaml
-          - osb-operators.configmap.upstream.yaml
-      - name: Install OSB catalog
-        shell: "{{ oc_cmd }} create -f {{ _osb_cat_manifests }}"
+    shell: "{{ oc_cmd }} create -f {{ role_path }}/files/{{ item }}"
+    with_items:
+      - osb-operators.catalogsource.yaml
+      - osb-operators.configmap.upstream.yaml
 
   #############################################################################
   # The broker's SA requires the admin ClusterRole binding; simply
